@@ -27,6 +27,7 @@ part.add_header('Content-Disposition' , "attachment; filename= " + filename)
 
 msg.attach(part)
 text = msg.as_string()
+c = 0
 
 with open('EmailAccounts.txt' , 'r') as f:
     for line in f:
@@ -37,5 +38,6 @@ with open('EmailAccounts.txt' , 'r') as f:
 
         server.sendmail(email_user , line , text)
         server.quit()
-        time.sleep(2)
-        print('*********')
+        c+=1
+        time.sleep(0.02)
+        print(+c+' emails sent.')
