@@ -6,7 +6,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 
-email_user = 'royd42415@gmail.com'
+email_user = 'yourusername@gmail.com'
 with open('Contents.txt' , 'r')as c:
 
     subject = c.readline()
@@ -34,7 +34,7 @@ with open('EmailAccounts.txt' , 'r') as f:
         msg['To']=line
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
-        server.login(email_user , 'gauravmia1')
+        server.login(email_user , 'password')
 
         server.sendmail(email_user , line , text)
         server.quit()
