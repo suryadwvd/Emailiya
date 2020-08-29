@@ -5,7 +5,7 @@ import smtplib
 <SMTP powered python file for sending single mail to one or more than one emails./>
 
     1:  Create an object of Message class and call the message() function with variables and store it in a var.
-    2:  In the message() function, set the From, Subject, Attachment, Body and BodyHtml attributes as plain-text strings.
+    2:  In the message() function, set Subject, Attachment, Body and BodyHtml attributes as plain-text strings.
         Optionally, set the BodyHtml attribute to send an HTML email. Also you can use the
         Attachment variable as name of the file to be attached.
         Note : Variable names are Case INSENSITIVE
@@ -13,6 +13,20 @@ import smtplib
     4:  Create an object of Emailiya class. Login using your credentials in function login(user, password).
     5:  Call the send(Message, toList) function where Message is the instance of Message class created earlier and toList is
         a list of username to whom the Message will be sent or String/List in case of only one username.
+        
+        example:
+            from emailiya import Emailiya
+            from emailiya import Message
+
+            msg = Message().message(Subject="this is subject",
+                                    HtmlText="This email uses <strong>HTML</strong>!</br> <h1>HELLUJAH</h1>",
+                                    Body="This is the body",
+                                    Attachment="document.pdf")     #Subject, HtmlText and Attachment are optional.
+                                                                   #Also variables are case INSENSITIVE
+            mail = Emailiya()
+            mail.login(usr='YourGmail@gmail.com', pwd='pa55w0rd')
+            mail.send(msg, ['user1@gmail.com', 'user2@yahoo.com'])
+
 """
 try:
     from email import encoders
@@ -73,6 +87,7 @@ class Emailiya(object):
             server.login(self._usr, self._pwd)
         else:
             print("You need to import call login(user, password) with your credentials.")
+        msg['From'] = self._usr
         text = msg.as_string()
         count = 0
         if isinstance(toList, str):
@@ -104,11 +119,13 @@ class Message:
         for i in kwargs:
             params[i.lower()] = kwargs[i]
         msg = MIMEMultipart()
-        msg['From'] = params.get('from', None)
-        msg['Subject'] = params.get('subject', None)
-
+        
+        if params.get('subject', None):
+            msg['Subject'] = params.get('subject')
+        
         if params.get('body', None):
             msg.attach(MIMEText(params.get('body'), 'text'))
+        
         if params.get('htmltext', None):
             msg.attach(MIMEText(params.get('htmltext'), 'html'))
 
