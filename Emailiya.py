@@ -3,7 +3,8 @@ import smtplib
 
 """
 <SMTP powered python file for sending single mail to one or more than one emails./>
-
+    
+    0:  Install SMTPlib
     1:  Create an object of Message class and call the message() function with variables and store it in a var.
     2:  In the message() function, set Subject, Attachment, Body and BodyHtml attributes as plain-text strings.
         Optionally, set the BodyHtml attribute to send an HTML email. Also you can use the
